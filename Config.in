@@ -1,0 +1,5 @@
+menu "IMX6ULL external board options"
+
+comment "No extra package options"
+
+endmenu
