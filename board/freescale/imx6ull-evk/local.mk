@@ -5,3 +5,6 @@
 
 UBOOT_OVERRIDE_SRCDIR = $(TOPDIR)/../u-boot-v2024.10
 LINUX_OVERRIDE_SRCDIR = $(TOPDIR)/../linux-6.12
+
+# LPF local source used when BR2_PACKAGE_LPF is enabled.
+LPF_OVERRIDE_SRCDIR = /home/wanguo/LPF

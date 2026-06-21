@@ -18,3 +18,7 @@ The board configuration uses local Linux and U-Boot source overrides:
 
 - `/home/wanguo/IMX6ULL/linux-6.12`
 - `/home/wanguo/IMX6ULL/u-boot-v2024.10`
+
+LPF is enabled through the external `package/lpf` package and uses the local
+`/home/wanguo/LPF` source override with the `imx6ull_modules_defconfig` LPF
+target.
