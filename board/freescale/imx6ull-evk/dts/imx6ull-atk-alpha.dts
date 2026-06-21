@@ -26,25 +26,6 @@
 		gpios = <&gpio1 1 GPIO_ACTIVE_LOW>;
 		status = "okay";
 	};
-
-	gpiobeep0: pdmdev-gpio@1 {
-		index = <1>;
-		compatible = "pdm-device-gpio", "pdm-switch-gpio";
-		pinctrl-names = "default";
-		pinctrl-0 = <&pinctrl_gpio_beep>;
-		gpios = <&gpio5 1 GPIO_ACTIVE_HIGH>;
-		default-state = "off";
-		status = "okay";
-	};
-
-	pwmled0: pdmdev-pwm@0 {
-		index = <0>;
-		compatible = "pdm-device-pwm", "pdm-dimmer-pwm";
-		pwms = <&pwm1 0 5000000 0>;
-		level-map = <0 15 30 45 70 85 100 130 180 250>;
-		default-level = <0>;
-		status = "okay";
-	};
 };
 
 &clks {
@@ -68,12 +49,6 @@
 	pinctrl_ir_recv: irrecvgrp {
 		fsl,pins = <
 			MX6UL_PAD_GPIO1_IO01__GPIO1_IO01	0x1b0b0
-		>;
-	};
-
-	pinctrl_gpio_beep: gpio-beeps {
-		fsl,pins = <
-			MX6UL_PAD_SNVS_TAMPER1__GPIO5_IO01	0x10B0
 		>;
 	};
 };
@@ -128,39 +103,4 @@
 
 &tsc {
 	status = "disabled";
-};
-
-&i2c1 {
-	status = "okay";
-
-	ap3216c0: pdmdev-i2c@1e {
-		compatible = "pdm-device-i2c", "pdm-sensor-ap3216c";
-		reg = <0x1e>;
-		position = <0>;
-		interrupt-parent = <&gpio5>;
-		interrupts = <0 8>;
-		status = "okay";
-	};
-};
-
-&i2c3 {
-	status = "okay";
-
-	nvmem0: pdmdev-i2c@c {
-		reg = <0xc>;
-		compatible = "pdm-device-i2c", "pdm-nvmem-i2c";
-		status = "okay";
-	};
-};
-
-&ecspi1 {
-	status = "okay";
-	dmas = <>;
-	dma-names = "";
-
-	nvmem1: pdmdev-spi@0 {
-		reg = <0>;
-		compatible = "pdm-device-spi", "pdm-nvmem-spi";
-		status = "disabled";
-	};
 };
