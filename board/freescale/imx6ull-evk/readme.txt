@@ -61,6 +61,18 @@ To boot your newly created system (refer to the i.MX 6ULL EVK Quick Start Guide 
   emulator at 115200 bps, 8n1;
 - power on the board.
 
+KGDB over serial
+================
+
+The kernel defconfigs enable KGDB and kgdboc support, but they do not bind
+kgdboc from the kernel command line. To enter KGDB at runtime, configure the
+serial KGDB I/O module first, then trigger SysRq-g:
+
+  echo ttymxc0,115200 > /sys/module/kgdboc/parameters/kgdboc
+  echo g > /proc/sysrq-trigger
+
+After kgdboc is configured, `/proc/sysrq-trigger` help should list `debug(g)`.
+
 Enjoy!
 
 References
