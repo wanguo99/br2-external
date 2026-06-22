@@ -7,7 +7,7 @@ using Upstream U-Boot and Linux.
 
 This external tree configuration uses local source overrides for:
 - Linux: /home/wanguo/IMX6ULL/linux-7.0
-- U-Boot: /home/wanguo/IMX6ULL/u-boot-v2024.10
+- U-Boot: /home/wanguo/IMX6ULL/uboot-2024.10
 
 Build
 =====
