@@ -24,7 +24,7 @@ Build all components:
 
 You will find in output/images/ the following files:
   - boot.vfat
-  - imx6ull-14x14-evk.dtb
+  - imx6ull-atk-dl6y2c.dtb
   - rootfs.ext2
   - rootfs.ext4
   - rootfs.tar
