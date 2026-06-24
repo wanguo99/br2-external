@@ -36,19 +36,10 @@ mount_fs()
     return 1
 }
 
-init_ftrace()
+init_debugfs()
 {
     if grep -qw debugfs /proc/filesystems; then
         mount_fs debugfs debugfs /sys/kernel/debug
-    else
-        log "debugfs is not supported by this kernel"
-    fi
-
-    if grep -qw tracefs /proc/filesystems; then
-        mount_fs tracefs tracefs /sys/kernel/tracing
-        mount_fs tracefs tracefs /sys/kernel/debug/tracing
-    else
-        log "tracefs is not supported by this kernel"
     fi
 }
 
@@ -57,7 +48,7 @@ start()
 {
     log "base module initialization"
 
-    init_ftrace
+    init_debugfs
 
     log "system ready"
 }
@@ -79,7 +70,7 @@ case "$1" in
         start
         ;;
     status)
-        is_mounted /sys/kernel/tracing && echo "tracefs: mounted" || echo "tracefs: not mounted"
+        is_mounted /sys/kernel/debug && echo "debugfs: mounted" || echo "debugfs: not mounted"
         ;;
     *)
         echo "Usage: $0 {start|stop|restart|reload|status}"
