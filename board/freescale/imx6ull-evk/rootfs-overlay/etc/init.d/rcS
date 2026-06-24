@@ -10,10 +10,10 @@ mkdir -p /proc /sys /run /tmp /var
 /bin/mount -a
 
 # 创建目录
-mkdir /var/log /var/lock
+mkdir -p /var/log /var/lock /var/lib/seedrng
 
 # 4. 初始化动态设备管理节点
-echo /sbin/mdev > /proc/sys/kernel/hotplug
+[ -w /proc/sys/kernel/hotplug ] && echo /sbin/mdev > /proc/sys/kernel/hotplug
 /sbin/mdev -s
 
 # 5. 设置主机名

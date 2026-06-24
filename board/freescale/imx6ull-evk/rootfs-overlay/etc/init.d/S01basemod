@@ -3,8 +3,6 @@
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
 NAME="S01basemod"
-ETH1_ADDR="192.168.18.241"
-ETH1_NETMASK="255.255.255.0"
 
 log()
 {
@@ -54,45 +52,19 @@ init_ftrace()
     fi
 }
 
-init_eth1()
-{
-    if [ ! -d /sys/class/net/eth1 ]; then
-        log "eth1 not found, skip network initialization"
-        return 0
-    fi
-
-    mkdir -p /var/run
-
-    if ifup eth1; then
-        log "eth1 initialized"
-        return 0
-    fi
-
-    log "ifup eth1 failed, configure static address directly"
-    if ifconfig eth1 "$ETH1_ADDR" netmask "$ETH1_NETMASK" up; then
-        log "eth1 configured as $ETH1_ADDR/$ETH1_NETMASK"
-        return 0
-    fi
-
-    log "failed to initialize eth1"
-    return 1
-}
 
 start()
 {
     log "base module initialization"
 
     init_ftrace
-    init_eth1
 
     log "system ready"
 }
 
 stop()
 {
-    if [ -d /sys/class/net/eth1 ]; then
-        ifdown eth1 2>/dev/null || true
-    fi
+    :
 }
 
 case "$1" in
@@ -107,7 +79,6 @@ case "$1" in
         start
         ;;
     status)
-        [ -d /sys/class/net/eth1 ] && echo "eth1: present" || echo "eth1: absent"
         is_mounted /sys/kernel/tracing && echo "tracefs: mounted" || echo "tracefs: not mounted"
         ;;
     *)
