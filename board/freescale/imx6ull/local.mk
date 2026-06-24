@@ -1,4 +1,4 @@
-# Local source overrides for the i.MX6ULL EVK board.
+# Local source overrides for the i.MX6ULL board.
 #
 # Keep product-specific source-tree selections in the external tree instead of
 # relying on an untracked local.mk in the Buildroot root directory.

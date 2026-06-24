@@ -59,7 +59,7 @@ main()
 
 	sed -e "s/%FILES%/${FILES}/" \
 		-e "s/%UBOOTBIN%/${UBOOTBIN}/" \
-		"${BR2_EXTERNAL_IMX6ULL_PATH}/board/freescale/imx6ull-evk/genimage.cfg.template" > "${GENIMAGE_CFG}"
+		"${BR2_EXTERNAL_IMX6ULL_PATH}/board/freescale/imx6ull/genimage.cfg.template" > "${GENIMAGE_CFG}"
 
 	rm -rf "${GENIMAGE_TMP}"
 

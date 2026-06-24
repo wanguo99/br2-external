@@ -1,8 +1,8 @@
-****************************
-Freescale i.MX6ULL EVK board
-****************************
+=========================
+i.MX6ULL ATK-DL6Y2C board
+=========================
 
-This file documents the Buildroot support for the Freescale i.MX6ULL EVK board
+This file documents the Buildroot support for the i.MX6ULL ATK-DL6Y2C board
 using Upstream U-Boot and Linux.
 
 This external tree configuration uses local source overrides for:
@@ -12,11 +12,11 @@ This external tree configuration uses local source overrides for:
 Build
 =====
 
-First, configure Buildroot for your i.MX6ULL EVK board:
+First, configure Buildroot for your i.MX6ULL board:
 
 In order to do so issue:
 
-  make BR2_EXTERNAL=../br2-external imx6ullevk_defconfig
+  make BR2_EXTERNAL=../br2-external imx6ull_defconfig
 
 Build all components:
 
@@ -50,12 +50,12 @@ command as root:
 *** WARNING! This will destroy all the card content. Use with care! ***
 
 For details about the medium image layout, see the definition in
-br2-external/board/freescale/imx6ull-evk/genimage.cfg.template.
+br2-external/board/freescale/imx6ull/genimage.cfg.template.
 
-Boot the i.MX6ULL EVK board
-===========================
+Boot the i.MX6ULL board
+=======================
 
-To boot your newly created system (refer to the i.MX 6ULL EVK Quick Start Guide [1] for guidance):
+To boot your newly created system:
 - insert the SD card in the micro SD slot of the board;
 - put a micro USB cable into the Debug USB Port and connect using a terminal
   emulator at 115200 bps, 8n1;
@@ -74,7 +74,3 @@ serial KGDB I/O module first, then trigger SysRq-g:
 After kgdboc is configured, `/proc/sysrq-trigger` help should list `debug(g)`.
 
 Enjoy!
-
-References
-==========
-[1] https://www.nxp.com/webapp/Download?colCode=IMX6ULLQSG
