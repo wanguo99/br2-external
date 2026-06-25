@@ -1,5 +1,5 @@
-menu "IMX6ULL external board options"
+menu "LINUX_BSP external board options"
 
-source "$BR2_EXTERNAL_IMX6ULL_PATH/package/lpf/Config.in"
+source "$BR2_EXTERNAL_LINUX_BSP_PATH/package/lpf/Config.in"
 
 endmenu

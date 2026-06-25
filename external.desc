@@ -1,2 +1,2 @@
-name: IMX6ULL
-desc: External Buildroot tree for NXP i.MX6ULL boards
+name: LINUX_BSP
+desc: External Buildroot tree for NXP i.MX6ULL \ am62x boards
