@@ -1,0 +1,149 @@
+#!/bin/sh
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+NAME="S03pdm"
+MODULES="osal pdm"
+CAN_IFACE="${CAN_IFACE:-can0}"
+CAN_BITRATE="${CAN_BITRATE:-500000}"
+CAN_FD="${CAN_FD:-0}"
+CAN_DBITRATE="${CAN_DBITRATE:-2000000}"
+CAN_RESTART_MS="${CAN_RESTART_MS:-100}"
+
+log()
+{
+    echo "[$NAME] $*"
+}
+
+module_loaded()
+{
+    grep -qw "^$1" /proc/modules
+}
+
+can_available()
+{
+    [ -d "/sys/class/net/$CAN_IFACE" ]
+}
+
+can_fd_enabled()
+{
+    case "$CAN_FD" in
+        1|y|Y|yes|YES|true|TRUE|on|ON)
+            return 0
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
+
+setup_can()
+{
+    local can_desc
+
+    if ! can_available; then
+        log "$CAN_IFACE is not available"
+        return 1
+    fi
+
+    ip link set "$CAN_IFACE" down 2>/dev/null || true
+    if can_fd_enabled; then
+        can_desc="bitrate=$CAN_BITRATE dbitrate=$CAN_DBITRATE fd=on restart-ms=$CAN_RESTART_MS"
+        if ! ip link set "$CAN_IFACE" type can bitrate "$CAN_BITRATE" dbitrate "$CAN_DBITRATE" fd on restart-ms "$CAN_RESTART_MS"; then
+            log "failed to configure $CAN_IFACE $can_desc"
+            return 1
+        fi
+    else
+        can_desc="bitrate=$CAN_BITRATE restart-ms=$CAN_RESTART_MS"
+        if ! ip link set "$CAN_IFACE" type can bitrate "$CAN_BITRATE" restart-ms "$CAN_RESTART_MS"; then
+            log "failed to configure $CAN_IFACE $can_desc"
+            return 1
+        fi
+    fi
+
+    if ip link set "$CAN_IFACE" up; then
+        log "$CAN_IFACE up $can_desc"
+        return 0
+    fi
+
+    log "failed to bring up $CAN_IFACE"
+    return 1
+}
+
+load_module()
+{
+    local module="$1"
+
+    if module_loaded "$module"; then
+        log "$module already loaded"
+        return 0
+    fi
+
+    if modprobe "$module"; then
+        log "$module loaded"
+        return 0
+    fi
+
+    log "failed to load $module"
+    return 1
+}
+
+start()
+{
+    local ret=0
+    local module
+
+    setup_can || ret=1
+
+    for module in $MODULES; do
+        load_module "$module" || ret=1
+    done
+
+    return "$ret"
+}
+
+stop()
+{
+    :
+}
+
+status()
+{
+    local module
+
+    if can_available; then
+        ip -details link show "$CAN_IFACE"
+    else
+        echo "$CAN_IFACE: unavailable"
+    fi
+
+    for module in $MODULES; do
+        if module_loaded "$module"; then
+            echo "$module: loaded"
+        else
+            echo "$module: not loaded"
+        fi
+    done
+}
+
+case "$1" in
+    start|"")
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart|reload)
+        stop
+        start
+        ;;
+    status)
+        status
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|reload|status}"
+        exit 1
+        ;;
+esac
+
+exit $?
