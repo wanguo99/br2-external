@@ -6,5 +6,5 @@
 UBOOT_OVERRIDE_SRCDIR = $(TOPDIR)/../uboot/uboot-2024.10
 LINUX_OVERRIDE_SRCDIR = $(TOPDIR)/../linux/linux-7.0
 
-# LPF local source used when BR2_PACKAGE_LPF is enabled.
-LPF_OVERRIDE_SRCDIR = $(TOPDIR)/../lpf
+# PAF local source used when BR2_PACKAGE_PAF is enabled.
+PAF_OVERRIDE_SRCDIR = $(TOPDIR)/../paf

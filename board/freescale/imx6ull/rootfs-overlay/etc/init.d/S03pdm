@@ -3,7 +3,7 @@
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
 NAME="S03pdm"
-MODULES="osal pdm"
+MODULES="pdm"
 CAN_IFACE="${CAN_IFACE:-can0}"
 CAN_BITRATE="${CAN_BITRATE:-500000}"
 CAN_FD="${CAN_FD:-0}"
